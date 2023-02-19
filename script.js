@@ -49,16 +49,21 @@ function solve(grid) {
               .getElementsByClassName('row')
               [i].getElementsByClassName('cell')[j];
             cell.innerText = number; // update cell value on screen
-
+            cell.classList.add('backtracking');
             if (solve(grid)) {
               return true;
             }
-
+            cell.classList.remove('backtracking');
             grid[i][j] = '.';
             cell.innerText = ''; // reset cell value on screen
           }
         }
         return false;
+      } else {
+        const cell = document
+          .getElementsByClassName('row')
+          [i].getElementsByClassName('cell')[j];
+        cell.classList.add('backtracking');
       }
     }
   }
@@ -99,6 +104,7 @@ function reset() {
       const cell = document
         .getElementsByClassName('row')
         [i].getElementsByClassName('cell')[j];
+      cell.classList.remove('backtracking');
       cell.innerText = originalGridValues[i][j];
     }
   }

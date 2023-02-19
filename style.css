@@ -63,3 +63,15 @@ button {
 button:hover {
   background-color: #3e8e41;
 }
+
+.cell.selected {
+  background-color: #c8e6c9;
+}
+
+.cell.unsolvable {
+  background-color: #ffcdd2;
+}
+
+.cell.backtracking {
+  background-color: #fff9c4;
+}
