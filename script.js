@@ -1,6 +1,7 @@
 const grid = document.getElementById('grid');
 const solveButton = document.getElementById('solve-button');
 const resetButton = document.getElementById('reset-button');
+const recursiveCalls = 0;
 
 const originalGridValues = [
   ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
@@ -39,6 +40,7 @@ function createGrid() {
 }
 
 async function solve(grid) {
+  recursiveCalls += 1;
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       if (grid[i][j] == '.') {
@@ -52,6 +54,8 @@ async function solve(grid) {
             cell.classList.add('backtracking');
             await new Promise((resolve) => setTimeout(resolve, 50)); // Add delay of 50ms
             if (await solve(grid)) {
+              cell.classList.remove('backtracking');
+              cell.classList.add('solved');
               return true;
             }
             cell.classList.remove('backtracking');
@@ -101,6 +105,7 @@ function isValid(value, grid, row, col) {
 }
 
 function reset() {
+  recursiveCalls = 0;
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       const cell = document
