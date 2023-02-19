@@ -96,3 +96,12 @@ button:hover {
     background-color: #8bc34a;
   }
 }
+
+#counter {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin: 16px 0;
+}
