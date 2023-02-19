@@ -39,10 +39,17 @@ function solve(grid) {
         for (let number of '123456789') {
           if (isValid(number, grid, i, j)) {
             grid[i][j] = number;
+            const cell = document
+              .getElementsByClassName('row')
+              [i].getElementsByClassName('cell')[j];
+            cell.innerText = number; // update cell value on screen
+
             if (solve(grid)) {
               return true;
             }
+
             grid[i][j] = '.';
+            cell.innerText = ''; // reset cell value on screen
           }
         }
         return false;
