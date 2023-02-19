@@ -38,7 +38,7 @@ function createGrid() {
   }
 }
 
-function solve(grid) {
+async function solve(grid) {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       if (grid[i][j] == '.') {
@@ -50,12 +50,14 @@ function solve(grid) {
               [i].getElementsByClassName('cell')[j];
             cell.innerText = number; // update cell value on screen
             cell.classList.add('backtracking');
-            if (solve(grid)) {
+            await new Promise((resolve) => setTimeout(resolve, 50)); // Add delay of 50ms
+            if (await solve(grid)) {
               return true;
             }
             cell.classList.remove('backtracking');
             grid[i][j] = '.';
             cell.innerText = ''; // reset cell value on screen
+            await new Promise((resolve) => setTimeout(resolve, 50)); // Add delay of 50ms
           }
         }
         return false;
