@@ -1,17 +1,23 @@
 const grid = document.getElementById('grid');
+const solveButton = document.getElementById('solve-button');
+const resetButton = document.getElementById('reset-button');
+
+const originalGridValues = [
+  ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
+  ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
+  ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
+  ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
+  ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
+  ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
+  ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
+  ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
+  ['.', '.', '.', '.', '8', '.', '.', '7', '9'],
+];
 
 function createGrid() {
-  const gridValues = [
-    ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
-    ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
-    ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
-    ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
-    ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
-    ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
-    ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
-    ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
-    ['.', '.', '.', '.', '8', '.', '.', '7', '9'],
-  ];
+  // Use a deep copy of the original grid values to avoid modifying the original array
+  const gridValues = JSON.parse(JSON.stringify(originalGridValues));
+
   // Create 9 rows
   for (let i = 0; i < 9; i++) {
     const row = document.createElement('div');
@@ -21,9 +27,9 @@ function createGrid() {
     for (let j = 0; j < 9; j++) {
       const cell = document.createElement('div');
       cell.classList.add('cell');
-      if (gridValues[i][j] !== '.') {
-        cell.innerText = gridValues[i][j];
-      }
+
+      cell.innerText = gridValues[i][j];
+
       row.appendChild(cell);
     }
 
@@ -86,5 +92,23 @@ function isValid(value, grid, row, col) {
 
   return true;
 }
+
+function reset() {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      const cell = document
+        .getElementsByClassName('row')
+        [i].getElementsByClassName('cell')[j];
+      cell.innerText = originalGridValues[i][j];
+    }
+  }
+}
+
+// Add event listeners to the buttons
+solveButton.addEventListener(
+  'click',
+  solve.bind(this, JSON.parse(JSON.stringify(originalGridValues)))
+);
+resetButton.addEventListener('click', reset);
 
 createGrid();
