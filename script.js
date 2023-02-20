@@ -4,6 +4,49 @@ const resetButton = document.getElementById('reset-button');
 const counter = document.getElementById('counter');
 let recursiveCalls = 0;
 
+const dot = document.querySelector('.dot');
+const slider = document.querySelector('.slider');
+let delay = 50;
+
+function updateValue() {
+  document.querySelector('.value').innerHTML = delay;
+}
+
+// function to handle dot movement
+function moveDot(event) {
+  // calculate the new position of the dot
+  let dotPosition = event.clientX - slider.offsetLeft;
+  // make sure the dot stays within the slider
+  if (dotPosition < 0) {
+    dotPosition = 0;
+  } else if (dotPosition > slider.offsetWidth) {
+    dotPosition = slider.offsetWidth;
+  }
+  // calculate the delay value based on the dot position
+  delay = Math.round((dotPosition / slider.offsetWidth) * 100);
+  // update the value element and delay variable
+  updateValue();
+  // update the position of the dot
+  dot.style.left = `${dotPosition}px`;
+}
+
+// add event listeners for dot movement
+dot.addEventListener('mousedown', () => {
+  dot.classList.add('active-dot');
+  document.addEventListener('mousemove', moveDot);
+});
+document.addEventListener('mouseup', () => {
+  dot.classList.remove('active-dot');
+  document.removeEventListener('mousemove', moveDot);
+});
+document.addEventListener('mouseleave', () => {
+  dot.classList.remove('active-dot');
+  document.removeEventListener('mousemove', moveDot);
+});
+
+// update the initial value element and delay variable
+updateValue();
+
 const originalGridValues = [
   ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
   ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
@@ -55,7 +98,7 @@ async function solve(grid) {
               [i].getElementsByClassName('cell')[j];
             cell.innerText = number; // update cell value on screen
             cell.classList.add('backtracking');
-            await new Promise((resolve) => setTimeout(resolve, 50)); // Add delay of 50ms
+            await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay of 50ms
             if (await solve(grid)) {
               cell.classList.remove('backtracking');
               cell.classList.add('solved');
@@ -64,7 +107,7 @@ async function solve(grid) {
             cell.classList.remove('backtracking');
             grid[i][j] = '.';
             cell.innerText = ''; // reset cell value on screen
-            await new Promise((resolve) => setTimeout(resolve, 50)); // Add delay of 50ms
+            await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay of 50ms
           }
         }
         return false;
