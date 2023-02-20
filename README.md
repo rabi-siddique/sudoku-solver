@@ -8,12 +8,12 @@ The number of recursive calls is displayed in real-time as the algorithm runs. T
 
 The "Reset" button simply refreshes the page to start a new puzzle.
 
-## Screenshots
-
-![Screenshot](screenshots/s1.png?raw=true)
-![Screenshot](screenshots/s2.png?raw=true)
-
 ## Demo
 
 You can check the demo over here:
 https://rabi-siddique.github.io/sudoku-solver/
+
+## Screenshots
+
+![Screenshot](screenshots/s1.png?raw=true)
+![Screenshot](screenshots/s2.png?raw=true)
