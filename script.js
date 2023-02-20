@@ -108,17 +108,7 @@ function isValid(value, grid, row, col) {
 }
 
 function reset() {
-  recursiveCalls = 0;
-  counter.style.backgroundColor = '#fff';
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      const cell = document
-        .getElementsByClassName('row')
-        [i].getElementsByClassName('cell')[j];
-      cell.classList.remove('backtracking');
-      cell.innerText = originalGridValues[i][j];
-    }
-  }
+  window.location.reload();
 }
 
 // Add event listeners to the buttons
