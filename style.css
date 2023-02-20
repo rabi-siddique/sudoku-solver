@@ -156,6 +156,15 @@ button:hover {
   margin-bottom: 20px;
 }
 
+.slider .progress-bar {
+  height: 100%;
+  border-radius: 5px;
+  background-color: #4caf50;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .slider .dot {
   width: 20px;
   height: 20px;

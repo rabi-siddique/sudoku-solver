@@ -4,48 +4,83 @@ const resetButton = document.getElementById('reset-button');
 const counter = document.getElementById('counter');
 let recursiveCalls = 0;
 
-const dot = document.querySelector('.dot');
 const slider = document.querySelector('.slider');
+const dot = document.querySelector('.dot');
+const value = document.querySelector('.value');
+const progressBar = document.querySelector('.progress-bar');
+
 let delay = 50;
 
-function updateValue() {
-  document.querySelector('.value').innerHTML = delay;
+function setDelay(newValue) {
+  delay = newValue;
+  value.textContent = newValue;
 }
 
-// function to handle dot movement
-function moveDot(event) {
-  // calculate the new position of the dot
-  let dotPosition = event.clientX - slider.offsetLeft;
-  // make sure the dot stays within the slider
-  if (dotPosition < 0) {
-    dotPosition = 0;
-  } else if (dotPosition > slider.offsetWidth) {
-    dotPosition = slider.offsetWidth;
+function setProgress(value) {
+  progressBar.style.width = value + '%';
+}
+
+function setPosition(x) {
+  if (x < 0) {
+    x = 0;
+  } else if (x > slider.offsetWidth) {
+    x = slider.offsetWidth;
   }
-  // calculate the delay value based on the dot position
-  delay = Math.round((dotPosition / slider.offsetWidth) * 100);
-  // update the value element and delay variable
-  updateValue();
-  // update the position of the dot
-  dot.style.left = `${dotPosition}px`;
+  dot.style.left = x + 'px';
 }
 
-// add event listeners for dot movement
-dot.addEventListener('mousedown', () => {
-  dot.classList.add('active-dot');
-  document.addEventListener('mousemove', moveDot);
-});
-document.addEventListener('mouseup', () => {
-  dot.classList.remove('active-dot');
-  document.removeEventListener('mousemove', moveDot);
-});
-document.addEventListener('mouseleave', () => {
-  dot.classList.remove('active-dot');
-  document.removeEventListener('mousemove', moveDot);
+slider.addEventListener('mousedown', function (event) {
+  event.preventDefault();
+  dot.style.pointerEvents = 'none';
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+
+  function onMouseMove(event) {
+    let x = event.pageX - slider.getBoundingClientRect().left;
+    setPosition(x);
+    delay = Math.floor((x / slider.offsetWidth) * 100);
+    value.innerText = delay;
+  }
+
+  function onMouseUp() {
+    document.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('mousemove', onMouseMove);
+    dot.style.pointerEvents = 'auto';
+  }
 });
 
-// update the initial value element and delay variable
-updateValue();
+dot.addEventListener('mousedown', function (event) {
+  event.preventDefault();
+
+  const startX = event.clientX;
+  const startLeft = dot.offsetLeft;
+  const sliderWidth = slider.offsetWidth;
+
+  function onMouseMove(event) {
+    const diffX = event.clientX - startX;
+    const left = startLeft + diffX;
+    let progress = (left / sliderWidth) * 100;
+    if (progress > 100) {
+      progress = 100;
+    } else if (progress < 0) {
+      progress = 0;
+    }
+    setProgress(progress);
+    setDelay(Math.round(progress));
+  }
+
+  function onMouseUp() {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
+
+setProgress(delay);
+value.textContent = delay;
 
 const originalGridValues = [
   ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
