@@ -20,66 +20,52 @@ function setProgress(value) {
   progressBar.style.width = value + '%';
 }
 
-function setPosition(x) {
+function setDotPosition(x) {
   if (x < 0) {
     x = 0;
-  } else if (x > slider.offsetWidth) {
-    x = slider.offsetWidth;
+  } else if (x > slider.offsetWidth - dot.offsetWidth) {
+    x = slider.offsetWidth - dot.offsetWidth;
   }
   dot.style.left = x + 'px';
+}
+
+function onMouseMove(event) {
+  let x = event.pageX - slider.getBoundingClientRect().left;
+  x -= dot.offsetWidth / 2;
+  if (x < 0) {
+    x = 0;
+  } else if (x > slider.offsetWidth - dot.offsetWidth) {
+    x = slider.offsetWidth - dot.offsetWidth;
+  }
+  setDotPosition(x);
+  const progress = (x / (slider.offsetWidth - dot.offsetWidth)) * 100;
+  setProgress(progress);
+  setDelay(Math.round(progress));
+}
+
+function onMouseUp() {
+  document.removeEventListener('mousemove', onMouseMove);
+  document.removeEventListener('mouseup', onMouseUp);
+  dot.style.pointerEvents = 'auto';
 }
 
 slider.addEventListener('mousedown', function (event) {
   event.preventDefault();
   dot.style.pointerEvents = 'none';
-
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
-
-  function onMouseMove(event) {
-    let x = event.pageX - slider.getBoundingClientRect().left;
-    setPosition(x);
-    delay = Math.floor((x / slider.offsetWidth) * 100);
-    value.innerText = delay;
-  }
-
-  function onMouseUp() {
-    document.removeEventListener('mouseup', onMouseUp);
-    document.removeEventListener('mousemove', onMouseMove);
-    dot.style.pointerEvents = 'auto';
-  }
 });
 
 dot.addEventListener('mousedown', function (event) {
   event.preventDefault();
-
-  const startX = event.clientX;
-  const startLeft = dot.offsetLeft;
-  const sliderWidth = slider.offsetWidth;
-
-  function onMouseMove(event) {
-    const diffX = event.clientX - startX;
-    const left = startLeft + diffX;
-    let progress = (left / sliderWidth) * 100;
-    if (progress > 100) {
-      progress = 100;
-    } else if (progress < 0) {
-      progress = 0;
-    }
-    setProgress(progress);
-    setDelay(Math.round(progress));
-  }
-
-  function onMouseUp() {
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  }
-
+  dot.style.pointerEvents = 'none';
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
 
 setProgress(delay);
+const initialDotPosition = Math.floor(((delay - 1) / 100) * slider.offsetWidth);
+setDotPosition(initialDotPosition);
 value.textContent = delay;
 
 const originalGridValues = [
