@@ -1,5 +1,5 @@
-import solve from './src/solve';
-import originalGridValues from './grid';
+import solve from './solve.js';
+import originalGridValues from './grid.js';
 
 const solveButton = document.getElementById('solve-button');
 const resetButton = document.getElementById('reset-button');

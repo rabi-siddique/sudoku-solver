@@ -1,3 +1,4 @@
-import './src/createGrid';
-import './src/buttons';
-import './src/slider';
+console.log('HELLO');
+import './src/createGrid.js';
+import './src/buttons.js';
+import './src/slider.js';

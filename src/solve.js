@@ -1,4 +1,4 @@
-import getDelay from './slider';
+import getDelay from './slider.js';
 
 let recursiveCalls = 0;
 const counter = document.getElementById('counter');
