@@ -22,3 +22,4 @@ jobs:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           publish_dir: ./docs
           commit_message: 'Deploy to GitHub Pages'
+          dotfiles: false
