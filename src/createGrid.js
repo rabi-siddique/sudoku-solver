@@ -1,4 +1,4 @@
-import originalGridValues from './grid.js';
+import { originalGridValues } from './grid.js';
 
 const grid = document.getElementById('grid');
 
