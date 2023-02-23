@@ -1,6 +1,6 @@
 import solve from './src/solve';
+import createGrid from './src/createGrid';
 
-const grid = document.getElementById('grid');
 const solveButton = document.getElementById('solve-button');
 const resetButton = document.getElementById('reset-button');
 
@@ -79,30 +79,6 @@ const originalGridValues = [
   ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
   ['.', '.', '.', '.', '8', '.', '.', '7', '9'],
 ];
-
-function createGrid() {
-  // Use a deep copy of the original grid values to avoid modifying the original array
-  const gridValues = JSON.parse(JSON.stringify(originalGridValues));
-
-  // Create 9 rows
-  for (let i = 0; i < 9; i++) {
-    const row = document.createElement('div');
-    row.classList.add('row');
-
-    // Create 9 columns for each row
-    for (let j = 0; j < 9; j++) {
-      const cell = document.createElement('div');
-      cell.classList.add('cell');
-
-      cell.innerText = gridValues[i][j];
-
-      row.appendChild(cell);
-    }
-
-    // Add the row to the grid
-    grid.appendChild(row);
-  }
-}
 
 function reset() {
   window.location.reload();
