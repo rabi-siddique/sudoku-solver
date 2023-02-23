@@ -10,6 +10,11 @@ function setDelay(newValue) {
   value.textContent = newValue;
 }
 
+// Exporting delay to use it in solve.js
+export function getDelay() {
+  return delay;
+}
+
 function setProgress(value) {
   progressBar.style.width = value + '%';
 }
@@ -43,6 +48,11 @@ function onMouseUp() {
   dot.style.pointerEvents = 'auto';
 }
 
+setProgress(delay);
+const initialDotPosition = Math.floor(((delay - 1) / 100) * slider.offsetWidth);
+setDotPosition(initialDotPosition);
+value.textContent = delay;
+
 slider.addEventListener('mousedown', function (event) {
   event.preventDefault();
   dot.style.pointerEvents = 'none';
@@ -56,8 +66,3 @@ dot.addEventListener('mousedown', function (event) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
-
-setProgress(delay);
-const initialDotPosition = Math.floor(((delay - 1) / 100) * slider.offsetWidth);
-setDotPosition(initialDotPosition);
-value.textContent = delay;

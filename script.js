@@ -1,11 +1,6 @@
 import solve from './src/solve';
 import createGrid from './src/createGrid';
 
-const solveButton = document.getElementById('solve-button');
-const resetButton = document.getElementById('reset-button');
-
-let delay = 50;
-
 const originalGridValues = [
   ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
   ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
@@ -17,6 +12,8 @@ const originalGridValues = [
   ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
   ['.', '.', '.', '.', '8', '.', '.', '7', '9'],
 ];
+const solveButton = document.getElementById('solve-button');
+const resetButton = document.getElementById('reset-button');
 
 function reset() {
   window.location.reload();
@@ -25,8 +22,8 @@ function reset() {
 // Add event listeners to the buttons
 solveButton.addEventListener(
   'click',
-  solve.bind(this, [JSON.parse(JSON.stringify(originalGridValues)), delay])
+  solve.bind(this, JSON.parse(JSON.stringify(originalGridValues)))
 );
 resetButton.addEventListener('click', reset);
 
-createGrid();
+createGrid(originalGridValues);

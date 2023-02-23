@@ -1,7 +1,10 @@
+import getDelay from './slider';
+
 let recursiveCalls = 0;
 const counter = document.getElementById('counter');
+let delay = getDelay();
 
-async function solve(grid, delay) {
+async function solve(grid) {
   recursiveCalls += 1;
   counter.textContent = `Number of recursive calls: ${recursiveCalls}`;
   counter.style.backgroundColor = '#333';
@@ -17,7 +20,7 @@ async function solve(grid, delay) {
             cell.innerText = number; // update cell value on screen
             cell.classList.add('backtracking');
             await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay
-            if (await solve(grid, delay)) {
+            if (await solve(grid)) {
               cell.classList.remove('backtracking');
               cell.classList.add('solved');
               return true;
