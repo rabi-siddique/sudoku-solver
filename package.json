@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/rabi-siddique/sudoku-solver-visualizer/issues"
   },
-  "homepage": "https://github.com/rabi-siddique/sudoku-solver-visualizer#readme"
+  "homepage": "https://github.com/rabi-siddique/sudoku-solver-visualizer#readme",
+  "dependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
 }
