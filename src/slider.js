@@ -11,7 +11,7 @@ function setDelay(newValue) {
 }
 
 // Exporting delay to use it in solve.js
-export function getDelay() {
+export default function getDelay() {
   return delay;
 }
 
