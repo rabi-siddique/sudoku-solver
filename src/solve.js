@@ -2,7 +2,6 @@ import getDelay from './slider.js';
 
 let recursiveCalls = 0;
 const counter = document.getElementById('counter');
-let delay = getDelay();
 
 async function solve(grid) {
   recursiveCalls += 1;
@@ -19,7 +18,7 @@ async function solve(grid) {
               [i].getElementsByClassName('cell')[j];
             cell.innerText = number; // update cell value on screen
             cell.classList.add('backtracking');
-            await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay
+            await new Promise((resolve) => setTimeout(resolve, getDelay())); // Add delay
             if (await solve(grid)) {
               cell.classList.remove('backtracking');
               cell.classList.add('solved');
@@ -28,7 +27,7 @@ async function solve(grid) {
             cell.classList.remove('backtracking');
             grid[i][j] = '.';
             cell.innerText = ''; // reset cell value on screen
-            await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay
+            await new Promise((resolve) => setTimeout(resolve, getDelay())); // Add delay
           }
         }
         return false;
