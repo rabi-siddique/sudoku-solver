@@ -1,3 +1,3 @@
-import createGrid from './src/createGrid';
-
-createGrid();
+import './src/createGrid';
+import './src/buttons';
+import './src/slider';

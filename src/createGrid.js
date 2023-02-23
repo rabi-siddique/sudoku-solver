@@ -26,4 +26,4 @@ function createGrid() {
   }
 }
 
-export default createGrid;
+createGrid();
