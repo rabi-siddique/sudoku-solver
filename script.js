@@ -1,8 +1,8 @@
+import solve from './src/solve';
+
 const grid = document.getElementById('grid');
 const solveButton = document.getElementById('solve-button');
 const resetButton = document.getElementById('reset-button');
-const counter = document.getElementById('counter');
-let recursiveCalls = 0;
 
 const slider = document.querySelector('.slider');
 const dot = document.querySelector('.dot');
@@ -104,73 +104,6 @@ function createGrid() {
   }
 }
 
-async function solve(grid) {
-  recursiveCalls += 1;
-  counter.textContent = `Number of recursive calls: ${recursiveCalls}`;
-  counter.style.backgroundColor = '#333';
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (grid[i][j] == '.') {
-        for (let number of '123456789') {
-          if (isValid(number, grid, i, j)) {
-            grid[i][j] = number;
-            const cell = document
-              .getElementsByClassName('row')
-              [i].getElementsByClassName('cell')[j];
-            cell.innerText = number; // update cell value on screen
-            cell.classList.add('backtracking');
-            await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay of 50ms
-            if (await solve(grid)) {
-              cell.classList.remove('backtracking');
-              cell.classList.add('solved');
-              return true;
-            }
-            cell.classList.remove('backtracking');
-            grid[i][j] = '.';
-            cell.innerText = ''; // reset cell value on screen
-            await new Promise((resolve) => setTimeout(resolve, delay)); // Add delay of 50ms
-          }
-        }
-        return false;
-      } else {
-        const cell = document
-          .getElementsByClassName('row')
-          [i].getElementsByClassName('cell')[j];
-        cell.classList.add('backtracking');
-      }
-    }
-  }
-
-  return true;
-}
-
-function isValid(value, grid, row, col) {
-  for (let i = 0; i < 9; i++) {
-    if (grid[row][i] == value) {
-      return false;
-    }
-  }
-
-  for (let i = 0; i < 9; i++) {
-    if (grid[i][col] == value) {
-      return false;
-    }
-  }
-
-  let r = 3 * Math.floor(row / 3);
-  let c = 3 * Math.floor(col / 3);
-
-  for (let i = r; i < r + 3; i++) {
-    for (let j = c; j < c + 3; j++) {
-      if (grid[i][j] == value) {
-        return false;
-      }
-    }
-  }
-
-  return true;
-}
-
 function reset() {
   window.location.reload();
 }
@@ -178,7 +111,7 @@ function reset() {
 // Add event listeners to the buttons
 solveButton.addEventListener(
   'click',
-  solve.bind(this, JSON.parse(JSON.stringify(originalGridValues)))
+  solve.bind(this, [JSON.parse(JSON.stringify(originalGridValues)), delay])
 );
 resetButton.addEventListener('click', reset);
 
