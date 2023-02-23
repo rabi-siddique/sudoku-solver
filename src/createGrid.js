@@ -1,6 +1,8 @@
+import originalGridValues from './grid';
+
 const grid = document.getElementById('grid');
 
-function createGrid(originalGridValues) {
+function createGrid() {
   // Use a deep copy of the original grid values to avoid modifying the original array
   const gridValues = JSON.parse(JSON.stringify(originalGridValues));
 
